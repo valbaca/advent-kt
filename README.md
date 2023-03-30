@@ -1,25 +1,15 @@
 # advent-kt
 
-Welcome to the Advent of Code[^aoc] Kotlin project created by [valbaca][github] using the [Advent of Code Kotlin Template][template] delivered by JetBrains.
+[Advent of Code 2022](https://adventofcode.com/2022) solutions in Kotlin
 
-In this repository, valbaca is about to provide solutions for the puzzles using [Kotlin][kotlin] language.
+See [TEMPLATE_README.md](/TEMPLATE_README.md) for more info on the template used.
 
-If you're stuck with Kotlin-specific questions or anything related to this template, check out the following resources:
+## Running
 
-- [Kotlin docs][docs]
-- [Kotlin Slack][slack]
-- Template [issue tracker][issues]
+Each Day has its own `main` function
 
+## Other languages
 
-[^aoc]:
-    [Advent of Code][aoc] – An annual event of Christmas-oriented programming challenges started December 2015.
-    Every year since then, beginning on the first day of December, a programming puzzle is published every day for twenty-five days.
-    You can solve the puzzle and provide an answer using the language of your choice.
-
-[aoc]: https://adventofcode.com
-[docs]: https://kotlinlang.org/docs/home.html
-[github]: https://github.com/valbaca
-[issues]: https://github.com/kotlin-hands-on/advent-of-code-kotlin-template/issues
-[kotlin]: https://kotlinlang.org
-[slack]: https://surveys.jetbrains.com/s3/kotlin-slack-sign-up
-[template]: https://github.com/kotlin-hands-on/advent-of-code-kotlin-template
+I've also solved other years of Advent of Code in other languages:
+- 🐍 Python: https://github.com/valbaca/advent-py Years 2015, 2020, and 2021
+- ☕️ Java and Clojure: https://github.com/valbaca/advent Years 2015, and 2016
