@@ -1,8 +1,10 @@
-import java.lang.IllegalArgumentException
 import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
+/**
+ * TIL: Kotlin made this one EASY: map toSet -> reduce intersection
+ */
 fun main() {
     day.println()
     fun getItemScore(ch: Char): Int {
@@ -24,8 +26,8 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int {
-        return input.sumOf { line ->
-            val ch = getRucksackError(line)
+        return input.sumOf {
+            val ch = getRucksackError(it)
             getItemScore(ch)
         }
     }

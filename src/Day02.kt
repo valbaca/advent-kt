@@ -2,6 +2,9 @@ import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
+/**
+ * TIL: Kotlin's `when` isn't as nice as Rust's match, but it's good.
+ */
 enum class Throw {
     Rock, Paper, Scissors;
 
@@ -16,7 +19,7 @@ fun String.toThrow(): Throw = when (this) {
     "A", "X" -> Throw.Rock
     "B", "Y" -> Throw.Paper
     "C", "Z" -> Throw.Scissors
-    else -> TODO()
+    else -> throw IllegalArgumentException()
 }
 
 enum class Result {
@@ -33,7 +36,7 @@ fun String.toResult(): Result = when (this) {
     "X" -> Result.Loss
     "Y" -> Result.Draw
     "Z" -> Result.Win
-    else -> TODO()
+    else -> throw IllegalArgumentException()
 }
 
 
@@ -50,8 +53,8 @@ fun main() {
     day.println()
 
     fun part1(input: List<String>): Int {
-        return input.sumOf { s ->
-            val (them, you) = s.split(" ").map { it.toThrow() }
+        return input.sumOf {
+            val (them, you) = it.split(" ").map { it.toThrow() }
             play(you, them).score() + you.score()
         }
     }
@@ -67,8 +70,8 @@ fun main() {
             }
         }
 
-        return input.sumOf { s ->
-            val (themStr, resultStr) = s.split(" ")
+        return input.sumOf {
+            val (themStr, resultStr) = it.split(" ")
             val them = themStr.toThrow()
             val result = resultStr.toResult()
             val you = whatPlay[result]!![them]!!

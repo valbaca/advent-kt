@@ -2,6 +2,11 @@ import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
+/**
+ * TIL: Kotlin doesn't have a partitionBy/groupBy that returns a list :(
+ *
+ * Breaking into some variables makes it easier to read and debug...just not too too many.
+ */
 fun main() {
     day.println()
     fun elfSums(input: List<String>): List<Int> {
@@ -9,7 +14,7 @@ fun main() {
         val ints = groups.filter { it != listOf("") }.map {
             it.map(String::toInt)
         }
-        return ints.map { list -> list.sum() }
+        return ints.map { it.sum() }
     }
 
     fun part1(input: List<String>): Int {
