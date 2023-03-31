@@ -1,6 +1,7 @@
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
+import kotlin.system.measureTimeMillis
 
 
 /**
@@ -53,4 +54,22 @@ fun <T, R> Iterable<T>.partitionBy(f: (t: T) -> R): List<List<T>> {
             Pair(accList, currResult)
         }
     }.first.map { innerList -> innerList.toList() }.toList()
+}
+
+/**
+ * Runs the block and gives a printable string of the result and elapsed time.
+ */
+fun <T> runMeasure(block: () -> T): String {
+    val result: T
+    val elapsed = measureTimeMillis {
+        result = block()
+    }
+    return "$result (took ${elapsed}ms)"
+}
+
+/**
+ * Runs the block, puts its result in a string (with elapsed time appended) and prints it out.
+ */
+fun <T> solve(block: () -> T) {
+    runMeasure(block).println()
 }

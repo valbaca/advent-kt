@@ -26,7 +26,7 @@ fun main() {
     val input = readInput(day)
 
     println("Part 1:")
-    println(part1(input))
+    solve { part1(input) }
     println("Part 2:")
-    println(part2(input))
+    solve { part2(input) }
 }
