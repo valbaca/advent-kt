@@ -26,3 +26,31 @@ fun checkEq(
  * Converts string to md5 hash.
  */
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16).padStart(32, '0')
+
+
+/**
+ * Given Iterator<T> and a function, returns list where items are partitioned by the result of f(T) where the result differs
+ * [0, 0, 1, -1, -2, 3] {it < 0} => [[0, 0, 1], [-1, -2], [3]]
+ *
+ * Named `partitionBy` after Clojure's [partition-by](https://clojuredocs.org/clojure.core/partition-by)
+ * Also similar to Rust itertools' [group_by](https://docs.rs/itertools/latest/itertools/structs/struct.GroupBy.html)
+ *
+ * This could be lazy...but it's probably fine.
+ */
+fun <T, R> Iterable<T>.partitionBy(f: (t: T) -> R): List<List<T>> {
+    val init = Pair<MutableList<MutableList<T>>, R?>(/* accList */ mutableListOf(), /* lastResult */ null)
+    return this.fold(init) { (accList, lastResult), elem ->
+        if (accList.isEmpty()) {
+            accList.add(mutableListOf(elem))
+            Pair(accList, f(elem))
+        }
+        val currResult = f(elem)
+        if (lastResult == currResult) {
+            accList.last().add(elem)
+            Pair(accList, currResult)
+        } else {
+            accList.add(mutableListOf(elem))
+            Pair(accList, currResult)
+        }
+    }.first.map { innerList -> innerList.toList() }.toList()
+}
