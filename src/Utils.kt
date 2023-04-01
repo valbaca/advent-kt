@@ -43,7 +43,7 @@ fun <T, R> Iterable<T>.partitionBy(f: (t: T) -> R): List<List<T>> {
     return this.fold(init) { (accList, lastResult), elem ->
         if (accList.isEmpty()) {
             accList.add(mutableListOf(elem))
-            Pair(accList, f(elem))
+            return@fold Pair(accList, f(elem))
         }
         val currResult = f(elem)
         if (lastResult == currResult) {
