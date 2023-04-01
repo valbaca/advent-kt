@@ -2,6 +2,10 @@ import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
+/**
+ * The hardest part about this one was the weird transposing of the input. I wish that part were cleaner.
+ * Using a Deque just made sense. Not sure how much slower an ArrayList would've been.
+ */
 fun main() {
     day.println()
     fun transpose(lines: List<String>): List<String> {

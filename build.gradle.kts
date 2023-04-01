@@ -20,4 +20,7 @@ tasks {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
+
+    implementation("org.eclipse.collections:eclipse-collections-api:11.1.0")
+    implementation("org.eclipse.collections:eclipse-collections:11.1.0")
 }

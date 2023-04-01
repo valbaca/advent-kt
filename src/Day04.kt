@@ -2,7 +2,9 @@ import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
-
+/**
+ * TIL: Unfortunately Kotlin doesn't have a good spread operator, so kind of made my own
+ */
 fun main() {
     day.println()
 
