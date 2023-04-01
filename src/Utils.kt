@@ -73,3 +73,7 @@ fun <T> runMeasure(block: () -> T): String {
 fun <T> solve(block: () -> T) {
     runMeasure(block).println()
 }
+
+//fun <A, B, R> Pair<A, B>.spread(f: (A, B) -> R) = f(first, second)
+fun <A, R> List<A>.spread2(f: (A, A) -> R) = f(this[0], this[1])
+fun <A> List<A>.toPair() = Pair(this[0], this[1])
