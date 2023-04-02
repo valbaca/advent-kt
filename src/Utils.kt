@@ -77,3 +77,25 @@ fun <T> solve(block: () -> T) {
 //fun <A, B, R> Pair<A, B>.spread(f: (A, B) -> R) = f(first, second)
 fun <A, R> List<A>.spread2(f: (A, A) -> R) = f(this[0], this[1])
 fun <A> List<A>.toPair() = Pair(this[0], this[1])
+
+fun List<String>.toIntMatrix(): List<List<Int>> = this.map { s ->
+    s.map { it.toString().toInt() }.toList()
+}.toList()
+
+/**
+ * Returns a list containing first elements until the given predicate is true.
+ * Includes the element that satisfies the predicate.
+ *
+ * Ex. [1, 2, 10, 3, 4].takeUntil { it >= 10} => [1, 2, 10]
+ *
+ * Similar but not quite the same as takeWhileInclusive:
+ * https://jivimberg.io/blog/2018/06/02/implementing-takewhileinclusive-in-kotlin/
+ */
+fun <T> Iterable<T>.takeUntil(pred: (T) -> Boolean): List<T> {
+    var stop = false
+    return takeWhile {
+        val go = !stop
+        stop = pred(it)
+        go
+    }
+}
