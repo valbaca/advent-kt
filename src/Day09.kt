@@ -4,6 +4,8 @@ private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
 /**
  * TIL: fold to the rescue! Glad I put in the time into the `touching` and `moveTo` functions. Made part 2 super easy.
+ *
+ * Learned that runningFold simplifies the fold-into-a-list pattern.
  */
 fun main() {
     day.println()
@@ -40,8 +42,8 @@ fun main() {
                 // [H, 1, 2, ..., 9]
                 // init = [H']
                 // then fold in the rest -> [H', 1'] -> [H', 1', 2'] ->...
-                rope = rope.subList(1, 10).fold(listOf(rope[0].move(dir))) { acc, p ->
-                    acc + (p.moveTo(acc.last()))
+                rope = rope.subList(1, 10).runningFold(rope[0].move(dir)) { prev, p ->
+                    p.moveTo(prev)
                 }
                 seen += rope.last()
             }
