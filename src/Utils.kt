@@ -99,3 +99,66 @@ fun <T> Iterable<T>.takeUntil(pred: (T) -> Boolean): List<T> {
         go
     }
 }
+
+fun Int.isPos() = this > 0
+fun Int.isNeg() = this < 0
+
+fun main() {
+    // https://blog.jetbrains.com/kotlin/2021/12/tips-and-tricks-for-solving-advent-of-code/
+    val xs = listOf("abc", "c", "ad", "bc", "ab", "ca")
+
+    // associate should return K-V Pairs; if duplicates, last association wins
+    print("associate: ")
+    println(xs.associate { Pair(it.first(), it) }) // {a=ab, c=ca, b=bc}
+    print("associate to: ")
+    println(xs.associate { it.first() to  it }) // use `to` for easy Pairs
+
+    // TIP: just use associate -> Pair and IntelliJ will suggest the correct function
+
+    // given a list, xs and a block that turns x -> y
+
+    // associateBy just returns the K, X is the Value
+    // returns Map<Y, X>
+    print("associateBy: ")
+    println(xs.associateBy { it.first() }) // equivalent to above
+
+    // associateWith just returns the V, X is the Key
+    // returns Map<X, Y>
+    print("associateWith: ")
+    println(xs.associateWith { it.length })
+
+    // groupBy is Map<K,List<V>> or Map<Y, List<X>>
+    print("groupBy: ")
+    println(xs.groupBy { it.first() })
+    // groupingBy is lazy
+    print("groupingBy: ")
+    println(xs.groupingBy{ it.first() }.eachCount())
+
+
+    print("windowed: ")
+    println("abcd".windowed(2))
+
+    // forEach map filter reduce fold ... all have Indexed versions
+    println("3456".filterIndexed { i, c -> i % c.digitToInt() == 0 })
+
+    xs.map { "map$it" }
+        .also {print("print mid-chain: ")}
+        .also(::println) // all one line
+        .also {print("print mid-chain on separate lines:")}
+        .onEach(::println) // separate lines
+        .filter { it.length % 2 == 0 }
+
+
+    println("ArrayDeque: ")
+    val dq = ArrayDeque<Int>()
+    dq += 0
+    dq += 1
+    println(dq)
+    dq += listOf(7, 8, 9)
+    println(dq)
+
+    val lst = listOf(1,2,3)
+    val lst2 = lst + 9
+    println(lst2)
+
+}
