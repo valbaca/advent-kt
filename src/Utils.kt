@@ -31,7 +31,8 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
 
 /**
  * Given Iterator<T> and a function, returns list where items are partitioned by the result of f(T) where the result differs
- * [0, 0, 1, -1, -2, 3] {it < 0} => [[0, 0, 1], [-1, -2], [3]]
+ *
+ * `[0, 0, 1, -1, -2, 3] {it < 0} => [[0, 0, 1], [-1, -2], [3]]`
  *
  * Named `partitionBy` after Clojure's [partition-by](https://clojuredocs.org/clojure.core/partition-by)
  * Also similar to Rust itertools' [group_by](https://docs.rs/itertools/latest/itertools/structs/struct.GroupBy.html)
