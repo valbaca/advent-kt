@@ -23,4 +23,6 @@ dependencies {
 
     implementation("org.eclipse.collections:eclipse-collections-api:11.1.0")
     implementation("org.eclipse.collections:eclipse-collections:11.1.0")
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
 }
