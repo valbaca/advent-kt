@@ -83,7 +83,108 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        TODO()
+        val valveMap = input.map { it.toValve() }.associateBy { it.id }
+
+        data class State2(
+            val pos: ID,
+            val eleph: ID,
+            val visited: Set<ID>,
+            val elephVisited: Set<ID>,
+            val opened: Set<ID>, // visited since last change, clear on valve open
+            val minutes: Int = 26, // minutes left
+            val futureFlow: Int = 0
+        )
+
+        val pq = PriorityQueue<State2> { s1, s2 ->
+            0 - s1.futureFlow.compareTo(s2.futureFlow)
+        }
+        val initialOpened = valveMap.filter { (k,v) -> v.rate == 0 }.map { (k,v) -> k }.toSet()
+//        println(zeroOpened)
+        pq.add(State2(start, start, setOf(start), setOf(start), initialOpened))
+        var mx = Int.MIN_VALUE
+
+        // Create a table of Space -> Time -> MaxFlow
+        // Need this to reduce the problem space from exploding out
+        // If you return to a place you've been, later and with lower flow: can just stop going forward
+        // This is like Dynamic Programming if you squint at it
+        val table = HashBasedTable.create<Pair<ID, ID>, Int, Int>()
+        for (k in valveMap.keys) {
+            for (k2 in valveMap.keys) {
+                for (min in 0..26) {
+                    table.put(k to k2, min, Int.MIN_VALUE)
+                }
+            }
+        }
+//        val table = ArrayTable.create(initTable)
+
+        while (pq.isNotEmpty()) {
+            val s = pq.poll()
+            if (s.minutes == 0) {
+                if (mx < s.futureFlow) {
+                    mx = s.futureFlow
+                    println("mx=$mx pq=${pq.size}")
+                }
+                continue
+            }
+            val lastBestFlow = table.get(s.pos to s.eleph, s.minutes)!!
+            if (lastBestFlow < s.futureFlow) {
+                for (m in s.minutes downTo 0) {
+                    table.put(s.pos to s.eleph, m, s.futureFlow)
+                }
+            } else {
+                continue // bail, we've been here before and done better
+            }
+
+            val options =
+                valveMap[s.pos]!!.leadsTo.filter { dest -> dest !in s.visited }
+                    .map { dest ->
+                        State2(dest, s.eleph, s.visited.plus(dest), s.elephVisited, s.opened, s.minutes-1, s.futureFlow)
+                    }.toMutableList()
+            if (s.pos !in s.opened) {
+                // open valve
+                val futureFlow = s.futureFlow + ((s.minutes-1) * valveMap[s.pos]!!.rate)
+                options += State2(s.pos, s.eleph, setOf(s.pos), s.elephVisited, s.opened.plus(s.pos),  s.minutes-1, futureFlow)
+            }
+
+            val xOptions = mutableListOf<State2>()
+            xOptions.addAll(options)
+            for (so in options) {
+                val eOptions =
+                    valveMap[so.eleph]!!.leadsTo.filter { dest -> dest !in so.elephVisited }
+                        .map { dest ->
+                            State2(so.pos, dest, so.visited, so.elephVisited.plus(dest), so.opened, so.minutes, so.futureFlow)
+                        }.toMutableList()
+                if (so.eleph !in so.opened) {
+                    // open valve
+                    val futureFlow = so.futureFlow + (so.minutes * valveMap[so.eleph]!!.rate)
+                    eOptions += State2(so.pos, so.eleph, so.visited, setOf(so.eleph), so.opened.plus(so.eleph), so.minutes, futureFlow)
+                }
+                xOptions.addAll(eOptions)
+            }
+
+            val eOptions =
+                valveMap[s.eleph]!!.leadsTo.filter { dest -> dest !in s.elephVisited }
+                    .map { dest ->
+                        State2(s.pos, dest, s.visited, s.elephVisited.plus(dest), s.opened, s.minutes-1, s.futureFlow)
+                    }.toMutableList()
+            if (s.eleph !in s.opened) {
+                // open valve
+                val futureFlow = s.futureFlow + ((s.minutes-1) * valveMap[s.eleph]!!.rate)
+                eOptions += State2(s.pos, s.eleph, s.visited, setOf(s.eleph), s.opened.plus(s.eleph), s.minutes-1, futureFlow)
+            }
+
+            xOptions.addAll(eOptions)
+
+            if (xOptions.isEmpty()) { // no more moves
+                if (mx < s.futureFlow) {
+                    mx = s.futureFlow
+                    println("mx=$mx pq=${pq.size}")
+                }
+            } else {
+                pq.addAll(xOptions)
+            }
+        }
+        return mx
     }
 
     val exInput = readInput("${day}_ex")
@@ -95,8 +196,10 @@ fun main() {
 //
     println("Part 1:")
     solve { part1(input) }
-//    println("Part 2:")
-//    solve { part2(input) }
+
+    checkEq(1707, part2(exInput))
+    println("Part 2:")
+    solve { part2(input) }
 }
 
 typealias ID = Int
@@ -117,3 +220,6 @@ fun String.toValve(): Valve {
         leadsTo.map { it.hashCode() }
     )
 }
+
+// Part 2:
+// 2631 (took 1611125ms) WRONG
