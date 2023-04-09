@@ -2,12 +2,21 @@ import com.google.common.collect.ArrayTable
 import com.google.common.collect.HashBasedTable
 import java.lang.invoke.MethodHandles
 import java.util.*
+import kotlin.collections.ArrayDeque
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
 
 val start = "AA".hashCode()
 
+/**
+ * TIL: Guava's Table is easy to work with and was a huge save for part 1
+ *
+ * Looks like most people used Floyd–Warshall algorithm to solve part 2
+ * I stubbornly stuck with my approach and just let it run for a very long time (~30mins)
+ *
+ * https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
+ */
 fun main() {
     day.println()
 
@@ -95,9 +104,10 @@ fun main() {
             val futureFlow: Int = 0
         )
 
-        val pq = PriorityQueue<State2> { s1, s2 ->
-            0 - s1.futureFlow.compareTo(s2.futureFlow)
-        }
+//        val pq = PriorityQueue<State2> { s1, s2 ->
+//            0 - s1.futureFlow.compareTo(s2.futureFlow)
+//        }
+        val pq = ArrayDeque<State2>()
         val initialOpened = valveMap.filter { (k,v) -> v.rate == 0 }.map { (k,v) -> k }.toSet()
 //        println(zeroOpened)
         pq.add(State2(start, start, setOf(start), setOf(start), initialOpened))
@@ -111,14 +121,14 @@ fun main() {
         for (k in valveMap.keys) {
             for (k2 in valveMap.keys) {
                 for (min in 0..26) {
-                    table.put(k to k2, min, Int.MIN_VALUE)
+                    table.put(k to k2 , min, Int.MIN_VALUE)
                 }
             }
         }
 //        val table = ArrayTable.create(initTable)
 
         while (pq.isNotEmpty()) {
-            val s = pq.poll()
+            val s = pq.removeLast()
             if (s.minutes == 0) {
                 if (mx < s.futureFlow) {
                     mx = s.futureFlow
@@ -150,7 +160,7 @@ fun main() {
             xOptions.addAll(options)
             for (so in options) {
                 val eOptions =
-                    valveMap[so.eleph]!!.leadsTo.filter { dest -> dest !in so.elephVisited }
+                    valveMap[so.eleph]!!.leadsTo.filter { dest -> dest != so.pos && dest !in so.elephVisited }
                         .map { dest ->
                             State2(so.pos, dest, so.visited, so.elephVisited.plus(dest), so.opened, so.minutes, so.futureFlow)
                         }.toMutableList()
@@ -163,7 +173,7 @@ fun main() {
             }
 
             val eOptions =
-                valveMap[s.eleph]!!.leadsTo.filter { dest -> dest !in s.elephVisited }
+                valveMap[s.eleph]!!.leadsTo .filter { dest -> dest != s.pos && dest !in s.elephVisited }
                     .map { dest ->
                         State2(s.pos, dest, s.visited, s.elephVisited.plus(dest), s.opened, s.minutes-1, s.futureFlow)
                     }.toMutableList()
@@ -172,7 +182,6 @@ fun main() {
                 val futureFlow = s.futureFlow + ((s.minutes-1) * valveMap[s.eleph]!!.rate)
                 eOptions += State2(s.pos, s.eleph, s.visited, setOf(s.eleph), s.opened.plus(s.eleph), s.minutes-1, futureFlow)
             }
-
             xOptions.addAll(eOptions)
 
             if (xOptions.isEmpty()) { // no more moves
@@ -222,4 +231,5 @@ fun String.toValve(): Valve {
 }
 
 // Part 2:
-// 2631 (took 1611125ms) WRONG
+// [redacted answer] (took 1890528ms)
+// TOOK 30 MINS...not proud but glad to be done with this one.
