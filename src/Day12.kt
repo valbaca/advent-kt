@@ -68,8 +68,6 @@ fun main() {
     solve { part2(input) }
 }
 
-typealias Cord = Pair<Int, Int>
-
 
 data class Trail(val steps: Int, val cord: Cord)
 
@@ -167,7 +165,7 @@ fun Char.toTopoValue(): Int {
     }
 }
 
-fun parse(input: List<String>): Topo {
+private fun parse(input: List<String>): Topo {
     var start: Cord? = null
     var end: Cord? = null
     val mx = input.mapIndexed { row, line ->

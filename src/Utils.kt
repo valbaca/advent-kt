@@ -1,6 +1,8 @@
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.*
+import kotlin.collections.ArrayDeque
 import kotlin.system.measureTimeMillis
 
 
@@ -162,4 +164,49 @@ fun main() {
     val lst2 = lst + 9
     println(lst2)
 
+}
+/**
+ * Coordinate (Cord for short)
+ */
+typealias Cord =  Pair<Int, Int>
+
+
+/**
+ * Using a Map to back an x,y grid of T
+ */
+data class SparseGrid<T>(val grid: SortedMap<Int, SortedMap<Int, T>> = sortedMapOf()) {
+    operator fun get(cord: Cord): T? {
+        return grid[cord.first]?.get(cord.second)
+    }
+
+    operator fun contains(cord: Cord): Boolean {
+        return grid.contains(cord.first) && grid[cord.first]!!.contains(cord.second)
+    }
+
+    operator fun set(cord: Cord, value: T) {
+        if (cord.first !in grid) {
+            grid[cord.first] = sortedMapOf()
+        }
+        grid[cord.first]!![cord.second] = value
+    }
+
+    fun putAlong(xs: IntProgression, ys: IntProgression, value: T) {
+        for (x in xs) {
+            val xg = grid.getOrPut(x) { sortedMapOf() }
+            for (y in ys) {
+                xg[y] = value
+            }
+        }
+    }
+}
+
+fun Int.progressTo(toValue: Int) = when {
+    this <= toValue -> this..toValue
+    else -> this downTo toValue
+}
+
+fun progressFromTo(from: Cord, to: Cord): Pair<IntProgression, IntProgression> {
+    val (fromX, fromY) = from
+    val (toX, toY) = to
+    return fromX.progressTo(toX) to fromY.progressTo(toY)
 }
