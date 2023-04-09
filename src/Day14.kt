@@ -2,6 +2,11 @@ import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 
+/**
+ * TIL: Today's ended up being pretty ugly.
+ * DeepRecursiveFunction is really great! Takes the manual work out of converting
+ * a function call into using a Stack.
+ */
 fun main() {
     day.println()
     fun part1(input: List<String>): Int {
