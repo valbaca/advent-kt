@@ -170,6 +170,7 @@ fun main() {
  */
 typealias Cord =  Pair<Int, Int>
 
+operator fun Cord.plus(other: Cord) = (first + other.first) to (second + other.second)
 
 /**
  * Using a Map to back an x,y grid of T
