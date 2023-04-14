@@ -29,5 +29,9 @@ dependencies {
     implementation("com.google.guava:guava:31.1-jre")
 
     // Jackson for JSON
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.7.1")
+}
+
+kotlin {
+    jvmToolchain(17)
 }
