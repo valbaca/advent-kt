@@ -1,3 +1,4 @@
+import org.checkerframework.checker.units.qual.s
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -107,6 +108,19 @@ fun Int.isPos() = this > 0
 fun Int.isNeg() = this < 0
 
 fun main() {
+    val s = "Blueprint 1: Each ore robot costs 4 ore. Each clay robot costs 2 ore. Each obsidian robot costs 3 ore and 14 clay. Each geode robot costs 2 ore and 7 obsidian."
+//    s.split(":. ").forEach {println(it)}
+    val ints = s.split(':', '.', ' ')
+        .mapNotNull { it.toIntOrNull() }
+//        .forEach { println(it) }
+    val (
+        id,
+        oreRobotOre
+    ) = ints
+}
+
+
+fun main0() {
     // https://blog.jetbrains.com/kotlin/2021/12/tips-and-tricks-for-solving-advent-of-code/
     val xs = listOf("abc", "c", "ad", "bc", "ab", "ca")
 
@@ -211,3 +225,5 @@ fun progressFromTo(from: Cord, to: Cord): Pair<IntProgression, IntProgression> {
     val (toX, toY) = to
     return fromX.progressTo(toX) to fromY.progressTo(toY)
 }
+
+fun String.ints(): List<Int> = this.split(':', '.', ' ').mapNotNull { it.toIntOrNull() }
