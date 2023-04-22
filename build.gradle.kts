@@ -30,6 +30,10 @@ dependencies {
 
     // Jackson for JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.7.1")
+
+    // Arrow for better Functional Programming / Types
+    implementation("io.arrow-kt:arrow-core:1.2.0-RC")
+    implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0-RC")
 }
 
 kotlin {
