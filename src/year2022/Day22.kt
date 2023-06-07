@@ -1,10 +1,16 @@
-import NSEW.*
-import Pos.Companion.firstPos
+package year2022
+
+import year2022.NSEW.*
+import year2022.Pos.Companion.firstPos
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import checkEq
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")

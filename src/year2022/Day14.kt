@@ -1,3 +1,13 @@
+package year2022
+
+import Cord
+import SparseGrid
+import checkEq
+import println
+import progressFromTo
+import readInput
+import solve
+import toPair
 import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")

@@ -1,4 +1,5 @@
 import java.lang.invoke.MethodHandles
+import kotlin.math.*
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")
 

@@ -1,5 +1,11 @@
+package year2022
+
+import checkEq
 import com.google.common.collect.HashBasedTable
 import org.eclipse.collections.impl.bag.mutable.HashBag
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 import java.util.*
 import kotlin.math.max

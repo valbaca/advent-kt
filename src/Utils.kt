@@ -15,7 +15,7 @@ fun Any?.println() = println(this)
 /**
  * Reads lines from the given input txt file.
  */
-fun readInput(name: String) = File("input", "$name.txt").readLines()
+fun readInput(name: String) = File("input", "${name.replace(".", "/")}.txt").readLines()
 
 /**
  * Given two objects, checks they're equal; throws IllegalStateException if they're not equal.
@@ -227,3 +227,9 @@ fun progressFromTo(from: Cord, to: Cord): Pair<IntProgression, IntProgression> {
 }
 
 fun String.ints(): List<Int> = this.split(':', '.', ' ').mapNotNull { it.toIntOrNull() }
+
+fun String.rotate(distance: Int): String {
+    val list = this.toMutableList()
+    Collections.rotate(list, distance)
+    return list.joinToString("")
+}

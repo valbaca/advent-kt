@@ -1,5 +1,13 @@
+package year2022
+
+import checkEq
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import partitionBy
+import println
+import readInput
+import solve
+import toPair
 import java.lang.invoke.MethodHandles
 import kotlin.math.min
 

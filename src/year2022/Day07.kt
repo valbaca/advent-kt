@@ -1,3 +1,9 @@
+package year2022
+
+import checkEq
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 import java.lang.ref.WeakReference
 import java.util.*

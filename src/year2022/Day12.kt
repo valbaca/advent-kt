@@ -1,3 +1,10 @@
+package year2022
+
+import Cord
+import checkEq
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 import java.util.*
 import kotlin.Comparator

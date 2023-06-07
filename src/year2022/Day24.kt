@@ -1,6 +1,12 @@
-import Blizzard.*
+package year2022
+
+import checkEq
+import year2022.Blizzard.*
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 import java.util.*
 

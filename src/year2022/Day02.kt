@@ -1,3 +1,9 @@
+package year2022
+
+import checkEq
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 
 private val day = MethodHandles.lookup().lookupClass().name.removeSuffix("Kt")

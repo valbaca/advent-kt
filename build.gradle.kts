@@ -20,6 +20,8 @@ tasks {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+
 
     // Eclipse Collections for faster primitive collections and Bag, etc.
     implementation("org.eclipse.collections:eclipse-collections-api:11.1.0")

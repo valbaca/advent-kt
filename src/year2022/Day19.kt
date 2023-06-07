@@ -1,3 +1,10 @@
+package year2022
+
+import checkEq
+import ints
+import println
+import readInput
+import solve
 import java.lang.invoke.MethodHandles
 import java.util.*
 import kotlin.math.ceil
