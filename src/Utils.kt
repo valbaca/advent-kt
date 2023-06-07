@@ -226,7 +226,21 @@ fun progressFromTo(from: Cord, to: Cord): Pair<IntProgression, IntProgression> {
     return fromX.progressTo(toX) to fromY.progressTo(toY)
 }
 
-fun String.ints(): List<Int> = this.split(':', '.', ' ').mapNotNull { it.toIntOrNull() }
+//fun String.ints(): List<Int> = this.split(':', '.', ' ').mapNotNull { it.toIntOrNull() }
+fun String.ints(): List<Int> {
+    return buildList {
+        var s = StringBuilder()
+        for (c in this@ints.toCharArray()) {
+            if (c.isDigit()) {
+                s.append(c)
+            } else if (s.isNotEmpty()) {
+                add(s.toString().toInt())
+                s = StringBuilder()
+            }
+        }
+        if (s.isNotEmpty()) add(s.toString().toInt())
+    }
+}
 
 fun String.rotate(distance: Int): String {
     val list = this.toMutableList()
